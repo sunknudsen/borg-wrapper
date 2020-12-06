@@ -37,8 +37,9 @@ These defaults can be overridden using a JSON config file that has the following
 ```console
 $ cat /Users/sunknudsen/Desktop/borg-wrapper/config.json
 {
-  "script": "/Users/sunknudsen/Desktop/borg-wrapper/borg-backup.sh",
-  "logFile": "/Users/sunknudsen/Desktop/borg-wrapper/borg-backup.log",
+  "label": "pi",
+  "script": "/Users/sunknudsen/Desktop/borg-wrapper/borg-backup-pi.sh",
+  "logFile": "/Users/sunknudsen/Desktop/borg-wrapper/borg-backup-pi.log",
   "initiatedNotifications": true,
   "completedNotifications": true,
   "failedNotifications": true
@@ -46,7 +47,7 @@ $ cat /Users/sunknudsen/Desktop/borg-wrapper/config.json
 ```
 
 ```console
-$ cat /Users/sunknudsen/Desktop/borg-wrapper/borg-backup.sh
+$ cat /Users/sunknudsen/Desktop/borg-wrapper/borg-backup-pi.sh
 #! /bin/sh
 
 set -e
@@ -54,7 +55,7 @@ set -e
 repo="user@host:backup"
 prefix="{user}-macbook-pro-"
 
-export BORG_PASSCOMMAND="security find-generic-password -a $USER -s borg-passphrase -w"
+export BORG_PASSCOMMAND="security find-generic-password -a $USER -s borg-passphrase-pi -w"
 export BORG_RSH="ssh -i ~/.ssh/borg-append-only"
 
 borg create \

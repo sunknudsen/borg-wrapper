@@ -10,6 +10,7 @@ import SwiftUI
 import UserNotifications
 
 struct Config : Codable {
+  let label: String
   let script: String
   let logFile: String
   let initiatedNotifications: Bool
@@ -78,6 +79,7 @@ func terminate() -> Void {
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDelegate {
   var config = Config(
+    label: "default",
     script: "/usr/local/bin/borg-backup.sh",
     logFile: "/usr/local/var/log/borg-backup.log",
     initiatedNotifications: true,
@@ -86,7 +88,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
   )
   func run() -> Void {
     if self.config.initiatedNotifications {
-      showNotification("Backup initiated...", self.config)
+      showNotification("Backup “\(self.config.label)” initiated...", self.config)
     }
 
     // Run script and log output
@@ -95,7 +97,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
     shell(command) {(status: Int32, output: String?) in
       if status == 0 {
         if self.config.completedNotifications {
-          showNotification("Backup completed", self.config)
+          showNotification("Backup “\(self.config.label)” completed", self.config)
         }
         // Truncate log file to last 1000 lines
         shell("echo \"$(tail -n 1000 \(self.config.logFile))\" > \(self.config.logFile)") {(status: Int32, output: String?) in
@@ -103,7 +105,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
         }
       } else {
         if self.config.failedNotifications {
-          showNotification("Backup failed", self.config)
+          showNotification("Backup “\(self.config.label)” failed", self.config)
         }
         terminate()
       }
