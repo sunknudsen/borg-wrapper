@@ -86,13 +86,14 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
     completedNotifications: true,
     failedNotifications: true
   )
+  
   func run() -> Void {
     if self.config.initiatedNotifications {
       showNotification("Backup “\(self.config.label)” initiated...", self.config)
     }
 
     // Run script and log output
-    let command = "set -o pipefail; PATH=\"$PATH:/usr/local/bin\" \(self.config.script) 2>&1 | tee -a \(self.config.logFile)"
+    let command = "set -o pipefail; PATH=$PATH:/opt/homebrew/bin:/usr/local/bin \(self.config.script) 2>&1 | tee -a \(self.config.logFile)"
 
     shell(command) {(status: Int32, output: String?) in
       if status == 0 {
@@ -111,13 +112,14 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
       }
     }
   }
+  
   var notificationCenterLaunch = false
   func applicationDidFinishLaunching(_ notification: Notification) {
     UNUserNotificationCenter.current().delegate = self
     UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { (allowed, error) in
       // Check if notifications are allowed
       if !allowed {
-        showAlert("Please allow notifications in System Preferences / Security & Privacy")
+        showAlert("Please allow notifications in System Preferences / Notifications")
         terminate()
       // Check if app was launched by clicking on notification
       } else if notification.userInfo?[NSApplication.launchUserNotificationUserInfoKey] != nil {
@@ -142,7 +144,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
       }
     }
   }
-  
+
   func userNotificationCenter(
     _ center: UNUserNotificationCenter,
     didReceive response: UNNotificationResponse,

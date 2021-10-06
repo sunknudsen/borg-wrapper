@@ -52,7 +52,7 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "/Users/sunknudsen/Desktop/borg-wrapper/config.json"
+            argument = "/Users/sunknudsen/.local/bin/borg-wrapper-config.json"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>
