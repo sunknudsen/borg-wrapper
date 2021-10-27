@@ -16,6 +16,8 @@ All credits go to the amazing [people](https://github.com/borgbackup/borg/graphs
 
 > Heads-up: [Homebrew](https://brew.sh/) users can skip steps 1 and 2 by running `brew install --cask sunknudsen/tap/borg-wrapper`.
 
+> Heads-up: given Borg Wrapper is developed outside the [Apple Developer Program](https://developer.apple.com/programs/), macOS prevents opening the app without explicit user consent (granted by clicking “Open Anyway” in “System Preferences” / “Privacy & Security”).
+
 ### Step 1: go to [https://github.com/sunknudsen/borg-wrapper/releases/latest](https://github.com/sunknudsen/borg-wrapper/releases/latest) and download latest `.dmg` release
 
 ### Step 2: double-click `.dmg` release and drag and drop Borg Wrapper to the “Applications” folder
